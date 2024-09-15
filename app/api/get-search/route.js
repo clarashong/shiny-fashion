@@ -275,12 +275,10 @@ export async function GET(request) {
     const parsedData = JSON.parse(response.text);
     const generatedLinks = generateAritziaLinks(parsedData);
     
-    const detailedResults = [];
-    for (const { category, link } of generatedLinks) {
-      const details = await getFirstClothingItemDetails(link);
-      detailedResults.push({ category, link, ...details });
-      await delay(2000); // Wait for 2 seconds before the next request
-    }
+    const detailedResults = generatedLinks.map(({ category, link }) => ({
+      category,
+      link
+    }));
 
     const responseData = {
       categories: parsedData,
