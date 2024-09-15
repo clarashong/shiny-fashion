@@ -234,7 +234,9 @@ function generateAritziaLinks(data) {
     
     return {
       category,
-      link
+      link,
+      randomColor,
+      randomMaterial
     };
   });
 
@@ -275,8 +277,10 @@ export async function GET(request) {
     const parsedData = JSON.parse(response.text);
     const generatedLinks = generateAritziaLinks(parsedData);
     
-    const detailedResults = generatedLinks.map(({ category, link }) => ({
+    const detailedResults = generatedLinks.map(({ category, link, randomColor, randomMaterial }) => ({
       category,
+      randomColor,
+      randomMaterial,
       link
     }));
 
@@ -285,6 +289,8 @@ export async function GET(request) {
       results: detailedResults.map(result => ({
         category: result.category,
         link: result.link,
+        randomColor: result.randomColor,
+        randomMaterial: result.randomMaterial,
         details: result.message ? { error: result.message } : {
           title: result.title,
           productLink: result.link,
